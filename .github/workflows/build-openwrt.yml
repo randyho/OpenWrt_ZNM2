@@ -39,7 +39,7 @@ env:
   CONFIG_FILE: ipq6000.config
   CUSTOM_SCRIPT_1: diy-part1_openwrt.sh
   CUSTOM_SCRIPT_2: diy-part2_openwrt.sh
-  STORE_PRODUCTS: true
+  STORE_PRODUCTS: false
   STORE_FIRMWARE: true
   RELEASE_FIRMWARE: true
   TIME_ZONE: Asia/Shanghai
@@ -142,6 +142,8 @@ jobs:
       - name: Upload firmware directory
         uses: actions/upload-artifact@v3
         if: steps.organize-files.outputs.status == 'success' && env.STORE_FIRMWARE == 'true' && !cancelled()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
           path: ${{ env.FIRMWARE }}
@@ -175,7 +177,7 @@ jobs:
         uses: Mattraks/delete-workflow-runs@main
         with:
           retain_days: 1
-          keep_minimum_runs: 1
+          keep_minimum_runs: 2
 
       - name: Remove old Releases
         uses: dev-drprasad/delete-older-releases@master
