@@ -1,7 +1,6 @@
 # OpenWrt_ZNM2
 
-IP段：192.168.2.1
+IP段：192.168.2.0/24
 
-插件：openclash
+插件：OpenClash
 
-主题：Argon
