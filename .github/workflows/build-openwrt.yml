@@ -33,7 +33,8 @@ on:
     types: started
 
 env:
-  REPO_URL: https://github.com/sdf8057/ipq6000.git
+  # REPO_URL: https://github.com/sdf8057/ipq6000.git
+  REPO_URL: https://github.com/KK2018gh/ipq6000-sdf8057.git
   REPO_BRANCH: main
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: ipq6000.config
