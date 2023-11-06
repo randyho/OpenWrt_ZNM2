@@ -11,9 +11,9 @@
 #
 
 # Add a feed source
-# sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
-# sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
-# sed -i '$a src-git openclash https://github.com/vernesong/OpenClash' feeds.conf.default
+sed 1,2d feeds.conf.default
+sed -i '$a src-git packages https://github.com/KK2018gh/ipq6000_packages.git;1806' feeds.conf.default
+sed -i '$a src-git luci https://github.com/KK2018gh/ipq6000_luci.git;1806' feeds.conf.default
 
 # Add luci-theme-argon
 # rm -rf lede/package/lean/luci-theme-argon
