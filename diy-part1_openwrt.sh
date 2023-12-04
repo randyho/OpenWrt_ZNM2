@@ -11,9 +11,9 @@
 #
 
 # Add a feed source
-sed -i '1,2d' feeds.conf.default
-sed -i '$a src-git packages https://github.com/KK2018gh/ipq6000_packages.git;1806' feeds.conf.default
-sed -i '$a src-git luci https://github.com/KK2018gh/ipq6000_luci.git;1806' feeds.conf.default
+# sed -i '1,2d' feeds.conf.default
+# sed -i '$a src-git packages https://github.com/KK2018gh/ipq6000_packages.git;1806' feeds.conf.default
+# sed -i '$a src-git luci https://github.com/KK2018gh/ipq6000_luci.git;1806' feeds.conf.default
 
 # Add luci-theme-argon
 # rm -rf lede/package/lean/luci-theme-argon
