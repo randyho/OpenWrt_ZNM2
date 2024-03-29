@@ -13,7 +13,7 @@
 #-------------------------------------------------------------------------------------------------------
 
 # Workflow name which is showed in GitHub Actions.
-name: Build OpenWrt for X86
+name: Build OpenWrt for ZNM2
 
 on:
   workflow_dispatch:
