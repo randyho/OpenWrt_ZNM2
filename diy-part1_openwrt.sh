@@ -23,5 +23,5 @@ sed -i '/passwall/d' feeds.conf.default
 # git clone --depth 1 -b master https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
 
 # 添加额外软件包
-git clone --depth 1 -b master https://github.com/vernesong/OpenClash.git package/luci-app-openclash
+# git clone --depth 1 -b master https://github.com/vernesong/OpenClash.git package/luci-app-openclash
 # git clone https://github.com/randyho/luci-app-clash-lite.git package/luci-app-clash-lite
