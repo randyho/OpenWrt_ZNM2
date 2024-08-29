@@ -34,13 +34,12 @@ on:
 
 env:
   REPO_URL: https://github.com/sdf8057/ipq6000.git
-  # REPO_URL: https://github.com/KK2018gh/ipq6000-sdf8057.git
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: ipq6000.config
   CUSTOM_SCRIPT_1: diy-part1_openwrt.sh
   CUSTOM_SCRIPT_2: diy-part2_openwrt.sh
-  STORE_PRODUCTS: false
+  STORE_PRODUCTS: true
   STORE_FIRMWARE: true
   RELEASE_FIRMWARE: true
   TIME_ZONE: Asia/Shanghai
@@ -48,18 +47,37 @@ env:
 jobs:
   build:
     name: Build firmware
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
 
+      # - name: Free Disk Space (Ubuntu)
+      #   uses: jlumbroso/free-disk-space@main
+      #   with:
+      #     # this might remove tools that are actually needed,
+      #     # if set to "true" but frees about 6 GB
+      #     tool-cache: true
+          
+      #     # all of these default to true, but feel free to set to
+      #     # "false" if necessary for your workflow
+      #     android: true
+      #     dotnet: true
+      #     haskell: true
+      #     large-packages: true
+      #     swap-storage: true
+            
       - name: Initialization environment
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
-          sudo bash -c 'bash <(curl -s https://build-scripts.immortalwrt.eu.org/init_build_environment.sh)'
+          docker rmi `docker images -q`
+          sudo rm -rf /etc/apt/sources.list.d/* /etc/mysql /etc/php /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo -E apt-get -qq update
+          sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+          sudo -E apt-get -qq autoremove --purge
+          sudo -E apt-get -qq clean
           sudo timedatectl set-timezone "$TIME_ZONE"
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
@@ -94,6 +112,27 @@ jobs:
           cd openwrt/
           $GITHUB_WORKSPACE/$CUSTOM_SCRIPT_2
 
+      # - name: Load custom configuration
+      #   run: |
+      #     echo "Apply app_config.sh"
+      #     cd openwrt
+      #     if [ -f "../app_config.sh" ]; then
+      #     (
+      #       /bin/bash "../app_config.sh" ${{matrix.target}}
+      #     )
+      #     fi
+
+      # - name: Install Clash Binaries
+      #   run: |
+      #     cd openwrt/
+      #     cd package/luci-app-openclash/luci-app-openclash/root
+      #     mkdir -p etc/openclash/core
+      #     # for updates, go to: https://github.com/MetaCubeX/mihomo/releases
+      #     curl -sL $(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep browser_download_url | cut -d\" -f4 | egrep 'linux-amd64-compatible-v.*') | gunzip -c > etc/openclash/core/clash_meta
+      #     # for updates, go to: https://github.com/vernesong/OpenClash
+      #     wget -qO- https://github.com/vernesong/OpenClash/raw/core/master/premium/clash-linux-amd64-2023.08.17-13-gdcc8d87.gz | gunzip -c > etc/openclash/core/clash_tun
+      #     chmod +x etc/openclash/core/clash*
+          
       - name: SSH connection to Actions
         uses: P3TERX/ssh2actions@main
         if: github.event.inputs.ssh == 'true' || contains(github.event.action, 'ssh')
@@ -126,7 +165,7 @@ jobs:
         run: df -hT
 
       - name: Upload all compilation products
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         if: steps.compile.outputs.status == 'success' && env.STORE_PRODUCTS == 'true'
         with:
           name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -141,10 +180,8 @@ jobs:
           echo "status=success" >> $GITHUB_OUTPUT
 
       - name: Upload firmware directory
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         if: steps.organize-files.outputs.status == 'success' && env.STORE_FIRMWARE == 'true' && !cancelled()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
           path: ${{ env.FIRMWARE }}
@@ -160,7 +197,7 @@ jobs:
 
       - name: Upload firmware to release
         uses: softprops/action-gh-release@master
-        if: steps.tag.outputs.status == 'success' && !cancelled()
+        if: steps.tag.outputs.status == 'success' && !cancelled() && steps.compile.outputs.status == 'success'
         with:
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
@@ -168,7 +205,7 @@ jobs:
 
   clean:
     name: Clean up old assets
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     permissions:
       actions: write
       contents: write
@@ -177,8 +214,8 @@ jobs:
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@main
         with:
-          retain_days: 1
-          keep_minimum_runs: 2
+          retain_days: 3
+          keep_minimum_runs: 3
 
       - name: Remove old Releases
         uses: dev-drprasad/delete-older-releases@master
@@ -188,3 +225,4 @@ jobs:
           delete_tags: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
