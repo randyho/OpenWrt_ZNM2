@@ -33,7 +33,7 @@ on:
     types: started
 
 env:
-  REPO_URL: https://github.com/LiBwrt-op/openwrt-6.x.git
+  REPO_URL: https://github.com/w2xg2022/ax18usb
   REPO_BRANCH: main
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: ipq6000.config
