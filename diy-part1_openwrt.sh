@@ -19,10 +19,15 @@ sed -i '/passwall/d' feeds.conf.default
 # rm -rf lede/package/lean/luci-theme-argon
 # git clone https://github.com/jerrykuku/luci-theme-argon.git
 # rm -rf package/lean/luci-theme-argon/
-# git clone --depth 1 -b master https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
-# git clone --depth 1 -b master https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
+git clone --depth 1 -b master https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
+git clone --depth 1 -b master https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
 
 # 添加额外软件包
 git clone --depth 1 -b main https://github.com/morytyann/OpenWrt-mihomo.git package/OpenWrt-mihomo
 # git clone --depth 1 -b master https://github.com/vernesong/OpenClash.git package/luci-app-openclash
 # git clone https://github.com/randyho/luci-app-clash-lite.git package/luci-app-clash-lite
+
+# 移除要替换的包
+rm -rf feeds/package/network/hostapd
+mkdir feeds/package/network/hostapd
+tar -zxvf patches/hostapd.tar.gz -C feeds/package/network/hostapd
