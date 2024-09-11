@@ -11,7 +11,7 @@
 #
 
 # Add a feed source
-sed -i '/passwall/d' feeds.conf.default
+# sed -i '/passwall/d' feeds.conf.default
 # sed -i '$a src-git packages https://github.com/KK2018gh/ipq6000_packages.git;1806' feeds.conf.default
 # sed -i '$a src-git luci https://github.com/KK2018gh/ipq6000_luci.git;1806' feeds.conf.default
 
@@ -24,10 +24,5 @@ git clone --depth 1 -b master https://github.com/jerrykuku/luci-app-argon-config
 
 # 添加额外软件包
 git clone --depth 1 -b main https://github.com/morytyann/OpenWrt-mihomo.git package/OpenWrt-mihomo
-# git clone --depth 1 -b master https://github.com/vernesong/OpenClash.git package/luci-app-openclash
+git clone --depth 1 -b master https://github.com/vernesong/OpenClash.git package/luci-app-openclash
 # git clone https://github.com/randyho/luci-app-clash-lite.git package/luci-app-clash-lite
-
-# 移除要替换的包
-rm -rf feeds/package/network/hostapd
-mkdir feeds/package/network/hostapd
-tar -zxvf patches/hostapd.tar.gz -C feeds/package/network/hostapd
