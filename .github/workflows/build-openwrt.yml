@@ -33,8 +33,8 @@ on:
     types: started
 
 env:
-  REPO_URL: https://github.com/w2xg2022/ax18usb
-  REPO_BRANCH: main
+  REPO_URL: https://github.com/LiBwrt-op/openwrt-6.x.git
+  REPO_BRANCH: openwrt-24.10
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: ipq6000.config
   CUSTOM_SCRIPT_1: diy-part1_openwrt.sh
@@ -74,6 +74,7 @@ jobs:
         run: |
           docker rmi `docker images -q`
           sudo rm -rf /etc/apt/sources.list.d/* /etc/mysql /etc/php /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
           sudo -E apt-get -qq update
           sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
           sudo -E apt-get -qq autoremove --purge
@@ -81,7 +82,14 @@ jobs:
           sudo timedatectl set-timezone "$TIME_ZONE"
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
-          
+
+      - name: Combine Disks
+        uses: easimon/maximize-build-space@master
+        with:
+          swap-size-mb: 1024
+          temp-reserve-mb: 100
+          root-reserve-mb: 1024
+        
       - name: Clone source code
         working-directory: /workdir
         run: |
