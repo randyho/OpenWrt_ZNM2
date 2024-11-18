@@ -197,14 +197,14 @@ jobs:
           name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
           path: ${{ env.FIRMWARE }}
 
-      - name: Generate release tag
-        id: tag
-        if: env.RELEASE_FIRMWARE == 'true' && !cancelled()
-        run: |
-          echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
-          touch release.txt
-          echo "Build from $REPO_URL $REPO_BRANCH" >> release.txt
-          echo "status=success" >> $GITHUB_OUTPUT
+      # - name: Generate release tag
+      #   id: tag
+      #   if: env.RELEASE_FIRMWARE == 'true' && !cancelled()
+      #   run: |
+      #     echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+      #     touch release.txt
+      #     echo "Build from $REPO_URL $REPO_BRANCH" >> release.txt
+      #     echo "status=success" >> $GITHUB_OUTPUT
 
       - name: Upload firmware to release
         uses: softprops/action-gh-release@master
