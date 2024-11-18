@@ -14,10 +14,10 @@
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 
 # 取消主题默认设置
-find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
+# find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
 
 # 修改 argon 为默认主题,不再集成luci-theme-bootstrap主题
-sed -i '$i uci set luci.main.mediaurlbase="/luci-static/argon"' package/*/*/my-default-settings/files/uci.defaults
+# sed -i '$i uci set luci.main.mediaurlbase="/luci-static/argon"' package/*/*/my-default-settings/files/uci.defaults
 # sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 # 添加网口
