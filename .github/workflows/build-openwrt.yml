@@ -35,7 +35,7 @@ on:
 env:
   REPO_URL: https://github.com/LiBwrt/openwrt-6.x.git
   REPO_BRANCH: openwrt-24.10
-  CONFIG_FILE: ipq60xx.config
+  CONFIG_FILE: ipq6000.config
   DIY_SCRIPT: diy-script.sh
   UPLOAD_BIN_DIR: false
   FIRMWARE_RELEASE: true
