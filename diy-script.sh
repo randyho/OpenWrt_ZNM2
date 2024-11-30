@@ -31,7 +31,7 @@ function git_sparse_clone() {
 
 # 科学上网插件
 git clone --depth 1 -b main https://github.com/morytyann/OpenWrt-mihomo package/OpenWrt-mihomo
-sed -i '$a src-git src-git mihomo https://github.com/morytyann/OpenWrt-mihomo.git;main' feeds.conf.default
+# sed -i '$a src-git src-git mihomo https://github.com/morytyann/OpenWrt-mihomo.git;main' feeds.conf.default
 
 # Themes
 # git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
