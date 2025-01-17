@@ -31,7 +31,7 @@ function git_sparse_clone() {
 
 # 科学上网插件
 git clone --depth 1 -b main https://github.com/morytyann/OpenWrt-mihomo package/OpenWrt-mihomo
-git clone --depth 1 -b main https://github.com/immortalwrt/homeproxy package/homeproxy
+git clone --depth 1 -b master https://github.com/immortalwrt/homeproxy package/homeproxy
 
 # Themes
 # git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
