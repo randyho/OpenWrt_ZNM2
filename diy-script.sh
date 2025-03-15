@@ -30,7 +30,7 @@ function git_sparse_clone() {
 }
 
 # 科学上网插件
-git clone --depth 1 -b main https://github.com/morytyann/OpenWrt-mihomo package/OpenWrt-mihomo
+git clone --depth 1 -b main https://github.com/nikkinikki-org/OpenWrt-nikki package/OpenWrt-nikki
 # git clone --depth 1 -b master https://github.com/immortalwrt/homeproxy package/homeproxy
 
 # Themes
