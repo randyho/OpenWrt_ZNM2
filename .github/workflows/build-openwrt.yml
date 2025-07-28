@@ -15,8 +15,8 @@ on:
 # Uncomment the following to run regularly. Note that the cron expression here does not contain seconds.
 #  schedule:
 #    - cron: 0 12 * * *
-  watch:
-    types: started
+  # watch:
+  #   types: started
 
 env:
   REPO_URL: https://github.com/LiBwrt/openwrt-6.x.git
