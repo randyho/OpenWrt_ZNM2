@@ -48,13 +48,23 @@ jobs:
         echo "--------------------------硬盘信息--------------------------"
         echo "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
             
+    - name: Maximize Available Disk Space(最大化可用磁盘空间​)
+      if: env.MADS == 'true'
+      uses: AdityaGarg8/remove-unwanted-software@master
+      with:
+        remove-dotnet: "true"
+        remove-android: "true"
+        remove-haskell: "true"
+        remove-codeql: "true"
+        remove-docker-images: "true"
+        remove-large-packages: "true"
+        remove-cached-tools: "true"
+        remove-swapfile: "true"
+
     - name: Initialization Environment(初始化环境)
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        docker rmi $(docker images -q)
-        sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d /usr/local/lib/android $AGENT_TOOLSDIRECTORY
-        sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
         sudo -E apt-get -y update
         sudo -E apt-get -y install $(curl -fsSL is.gd/depends_ubuntu_2204)
         sudo -E systemctl daemon-reload
@@ -62,14 +72,7 @@ jobs:
         sudo -E apt-get -y clean
         sudo timedatectl set-timezone "$TZ"
 
-    - name: Combine Disks(合并磁盘)
-      uses: easimon/maximize-build-space@master
-      with:
-        swap-size-mb: 1024
-        temp-reserve-mb: 100
-        root-reserve-mb: 1024
-
-    - name: Checkout
+    - name: Checkout(检出代码)
       uses: actions/checkout@main
 
     - name: Clone Source Code(克隆源代码)
