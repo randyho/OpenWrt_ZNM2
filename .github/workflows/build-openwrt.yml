@@ -25,7 +25,7 @@ env:
   DIY_SCRIPT: diy-script.sh
   UPLOAD_BIN_DIR: false
   FIRMWARE_RELEASE: true
-  FIRMWARE_TAG: IPQ60XX-24.10(NOWIFI)
+  FIRMWARE_TAG: IPQ60XX-6.12-NOWIFI
   TZ: Asia/Shanghai
 
 jobs:
