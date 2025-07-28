@@ -39,7 +39,7 @@ git clone --depth 1 -b main https://github.com/nikkinikki-org/OpenWrt-nikki pack
 # git clone --depth 1 -b master https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
 
 # MosDNS
-git clone --depth=1 https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
+# git clone --depth=1 https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
 
 # Alist
 # git clone --depth=1 https://github.com/sbwml/luci-app-alist package/luci-app-alist
