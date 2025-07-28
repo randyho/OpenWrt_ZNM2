@@ -1,19 +1,5 @@
-#
-# Copyright (c) 2022-2023 Curious <https://www.curious.host>
-#
-# This is free software, licensed under the MIT License.
-# See /LICENSE for more information.
-# 
-# https://github.com/Curious-r/OpenWrtBuildWorkflows
-# Description: Automatically check OpenWrt source code update and build it. No additional keys are 
-# required.
-#
-# Some features come from https://github.com/P3TERX/Actions-OpenWrt, visit the repository to get its 
-# copyright information.
-#-------------------------------------------------------------------------------------------------------
-
 # Workflow name which is showed in GitHub Actions.
-name: Build OpenWrt for ZNM2
+name: Build LibWrt for ZNM2
 
 on:
   workflow_dispatch:
@@ -34,7 +20,7 @@ on:
 
 env:
   REPO_URL: https://github.com/LiBwrt/openwrt-6.x.git
-  REPO_BRANCH: k6.12-nss  # openwrt-24.10
+  REPO_BRANCH: k6.12-nss
   CONFIG_FILE: ipq6000.config
   DIY_SCRIPT: diy-script.sh
   UPLOAD_BIN_DIR: false
@@ -189,8 +175,8 @@ jobs:
         body: |
           **This is LibWrt Firmware for ${{ env.FIRMWARE_TAG }}**
           ### 📒 版本24.10固件(NOWIFI)
-          - 这是NOWIFI，带NSS的6.6内核固件
-          - 💻 这是 ${{ env.FIRMWARE_TAG }} 平台使用的 OpenWrt 固件
+          - 这是NOWIFI，带NSS的6.12内核固件
+          - 💻 这是 ${{ env.FIRMWARE_TAG }} 平台使用的 LibnWrt 固件
           - ⚽ 固件源码: ${{ env.REPO_URL }}
           - 💝 源码分支: ${{ env.REPO_BRANCH }}
           - 🌐 默认地址: 192.168.2.1
