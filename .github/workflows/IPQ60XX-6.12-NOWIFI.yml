@@ -115,6 +115,7 @@ jobs:
         chmod +x $DIY_SCRIPT
         cd $OPENWRT_PATH
         $GITHUB_WORKSPACE/$DIY_SCRIPT
+        sh get_geofiles.sh
 
     - name: Download DL Package(下载DL软件包)
       run: |
