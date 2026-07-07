@@ -5,8 +5,8 @@ mkdir -p files/etc/nikki/run
 
 GEOIP_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat"
 GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
-MMDB_URL="https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb"
-ASN_URL="https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb"
+MMDB_URL="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb"
+ASN_URL="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb"
 
 wget -O files/etc/nikki/run/GeoIP.dat "$GEOIP_URL"
 wget -O files/etc/nikki/run/GeoSite.dat "$GEOSITE_URL"
