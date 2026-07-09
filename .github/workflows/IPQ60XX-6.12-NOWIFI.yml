@@ -21,7 +21,7 @@ env:
   REPO_URL: https://github.com/LiBwrt/openwrt-6.x.git
   REPO_BRANCH: main-nss
   CONFIG_FILE: ipq60xx-nowifi.config
-  DIY_SCRIPT: libwrt.sh
+  DIY_SCRIPT: diy-script.sh
   CACHE_TOOLCHAIN: false
   UPLOAD_BIN_DIR: true
   FIRMWARE_RELEASE: true
@@ -139,7 +139,7 @@ jobs:
       if: failure()
       run: |
         cat /home/runner/work/ZN_M2-OpenWRT-CI/ZN_M2-OpenWRT-CI/openwrt/build.log
-	
+
     - name: Check Space Usage(检查空间使用情况)
       if: (!cancelled())
       run: df -hT
