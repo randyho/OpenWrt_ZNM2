@@ -29,3 +29,7 @@ sed -i "s/^CONFIG_VERSION_CODE=.*/CONFIG_VERSION_CODE=\"R$(date +%Y%m%d)\"/" .co
 
 # 修改默认主题
 # sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+
+# 再次更新feeds
+./scripts/feeds update -a
+./scripts/feeds install -a
