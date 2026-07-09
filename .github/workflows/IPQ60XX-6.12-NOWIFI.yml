@@ -22,10 +22,10 @@ env:
   REPO_BRANCH: main-nss
   CONFIG_FILE: ipq60xx-nowifi.config
   DIY_SCRIPT: libwrt.sh
-  CACHE_TOOLCHAIN: true
-  UPLOAD_BIN_DIR: false
+  CACHE_TOOLCHAIN: false
+  UPLOAD_BIN_DIR: true
   FIRMWARE_RELEASE: true
-  FIRMWARE_TAG: IPQ60XX-6.12-NOWIFI
+  FIRMWARE_TAG: ZN_M2-6.12-NOWIFI
   TZ: Asia/Shanghai
 
 jobs:
@@ -51,7 +51,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        # docker rmi $(docker images -q)
+        # docker rmi -f $(docker images -q)
         sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d /usr/local/lib/android $AGENT_TOOLSDIRECTORY
         sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
         sudo -E apt-get -y update
@@ -135,6 +135,11 @@ jobs:
         echo "DATE=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
 
+    - name: 输出构建日志
+      if: failure()
+      run: |
+        cat /home/runner/work/ZN_M2-OpenWRT-CI/ZN_M2-OpenWRT-CI/openwrt/build.log
+	
     - name: Check Space Usage(检查空间使用情况)
       if: (!cancelled())
       run: df -hT
@@ -152,15 +157,10 @@ jobs:
         cd $OPENWRT_PATH/bin/targets/*/*
         cat sha256sums
         cp $OPENWRT_PATH/.config build.config
-        rm -rf feeds.buildinfo version.buildinfo
+        mv -f $OPENWRT_PATH/bin/packages/*/*/*.apk packages
+        tar -zcf Packages.tar.gz packages
+        rm -rf packages feeds.buildinfo version.buildinfo
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
-
-    - name: Upload Firmware To Artifact(将固件上传到Artifact)
-      if: steps.compile.outputs.status == 'success' && env.FIRMWARE_RELEASE != 'true'
-      uses: actions/upload-artifact@main
-      with:
-        name: ${{ env.SOURCE_REPO }}-firmware-${{ env.DEVICE_TARGET }}-${{ env.DEVICE_SUBTARGET }}-${{ env.FILE_DATE }}
-        path: ${{ env.FIRMWARE_PATH }}
 
     - name: Upload Firmware To Release(发布固件)
       if: steps.compile.outputs.status == 'success' && env.FIRMWARE_RELEASE == 'true'
@@ -172,7 +172,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: ${{ env.FIRMWARE_PATH }}/*
         body: |
-          **This is OpenWrt Firmware for ${{ env.FIRMWARE_TAG }}**
+          **此 OpenWrt 固件为 ${{ env.FIRMWARE_TAG }}**
           ### 📒 固件信息(无WIFI)
           - 无WIFI带有线NSS的6.12内核固件
           - 💻 这是 ${{ env.FIRMWARE_TAG }} 平台使用的 OpenWrt 固件
