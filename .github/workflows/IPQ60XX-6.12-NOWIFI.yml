@@ -22,7 +22,7 @@ env:
   REPO_BRANCH: main-nss
   CONFIG_FILE: ipq60xx-nowifi.config
   DIY_SCRIPT: diy_script.sh
-  CACHE_TOOLCHAIN: false
+  CACHE_TOOLCHAIN: true
   UPLOAD_BIN_DIR: true
   FIRMWARE_RELEASE: true
   FIRMWARE_TAG: ZN_M2-6.12-NOWIFI
