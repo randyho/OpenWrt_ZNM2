@@ -17,9 +17,6 @@ sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generat
 # rm -rf feeds/luci/applications/luci-app-serverchan
 # rm -rf feeds/luci/applications/luci-app-smartdns
 
-# 修改本地时间格式
-# sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' package/lean/autocore/files/*/index.htm
-
 # 修改版本为编译日期
 sed -i "s/^CONFIG_VERSION_NUMBER=.*/CONFIG_VERSION_NUMBER=\"$(date +%Y.%m.%d)\"/" .config
 sed -i "s/^CONFIG_VERSION_CODE=.*/CONFIG_VERSION_CODE=\"R$(date +%Y%m%d)\"/" .config
@@ -28,7 +25,8 @@ sed -i "s/^CONFIG_VERSION_CODE=.*/CONFIG_VERSION_CODE=\"R$(date +%Y%m%d)\"/" .co
 # sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 # 科学上网插件
-git clone --depth 1 -b main https://github.com/nikkinikki-org/OpenWrt-nikki package/luci-app-nikki
+# git clone --depth 1 -b main https://github.com/nikkinikki-org/OpenWrt-nikki package/luci-app-nikki
+echo "src-git nikki https://github.com/nikkinikki-org/OpenWrt-nikki.git;main" >> "feeds.conf.default"
 
 # 下载geo文件
 mkdir -p files/etc/nikki/run
