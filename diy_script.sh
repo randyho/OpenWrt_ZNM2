@@ -38,10 +38,10 @@ GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/dow
 MMDB_URL="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb"
 ASN_URL="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb"
 
-wget -O files/etc/nikki/run/GeoIP.dat "$GEOIP_URL"
-wget -O files/etc/nikki/run/GeoSite.dat "$GEOSITE_URL"
-wget -O files/etc/nikki/run/Country.mmdb "$MMDB_URL"
-wget -O files/etc/nikki/run/ASN.mmdb "$ASN_URL"
+wget -qO files/etc/nikki/run/GeoIP.dat "$GEOIP_URL"
+wget -qO files/etc/nikki/run/GeoSite.dat "$GEOSITE_URL"
+wget -qO files/etc/nikki/run/Country.mmdb "$MMDB_URL"
+wget -qO files/etc/nikki/run/ASN.mmdb "$ASN_URL"
 
 # 再次更新feeds
 ./scripts/feeds update -a
