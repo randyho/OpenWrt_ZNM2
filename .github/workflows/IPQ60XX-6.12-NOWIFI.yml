@@ -138,7 +138,7 @@ jobs:
     - name: 输出构建日志
       if: failure()
       run: |
-        cat /home/runner/work/ZN_M2-OpenWRT-CI/ZN_M2-OpenWRT-CI/openwrt/build.log
+        cat /home/runner/work/OpenWrt_ZNM2/OpenWrt_ZNM2/openwrt/build.log
 
     - name: Check Space Usage(检查空间使用情况)
       if: (!cancelled())
