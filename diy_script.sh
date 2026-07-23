@@ -1,5 +1,38 @@
 #!/bin/bash
 
+echo "自定义固件版本名字"
+sed -i "/^\. \/etc\/openwrt_release/a\\
+sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release\n\
+echo \"DISTRIB_REVISION='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
+sed -i '/DISTRIB_RELEASE/d' /etc/openwrt_release\n\
+echo \"DISTRIB_RELEASE='v\$(date +'%Y.%m.%d')'\" >> /etc/openwrt_release\n\
+ sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release\n\
+ echo \"DISTRIB_DESCRIPTION='AutoBuild Firmware Compiled By @waynesg Build \$(TZ=UTC-8 date \"+%Y.%m.%d\") @ OpenWrt '\" >> /etc/openwrt_release
+" package/emortal/default-settings/files/99-default-settings
+
+echo "调整网络诊断地址到www.baidu.com"
+sed -i "/exit 0/d" package/emortal/default-settings/files/99-default-settings
+cat <<EOF >>package/emortal/default-settings/files/99-default-settings
+uci set luci.diag.ping=www.baidu.com
+uci set luci.diag.route=www.baidu.com
+uci set luci.diag.dns=www.baidu.com
+uci commit luci
+exit 0
+EOF
+
+# echo 
+# TIME y "ttyd自动登录"
+# sed -i "s?/bin/login?/usr/libexec/login.sh?g" feeds/packages/utils/ttyd/files/ttyd.config
+
+echo "修改最大连接数修改为65535"
+sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
+
+echo "更换golang版本"
+# rm -rf feeds/packages/lang/golang
+# git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/lang/golang
+
 # 修改默认IP
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 
