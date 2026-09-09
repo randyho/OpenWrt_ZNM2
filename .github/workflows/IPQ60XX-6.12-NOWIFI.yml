@@ -22,7 +22,7 @@ env:
   REPO_BRANCH: 25.12-nss
   CONFIG_FILE: ipq60xx-6.12-nowifi.config
   DIY_SCRIPT: diy_script.sh
-  CACHE_TOOLCHAIN: true
+  CACHE_TOOLCHAIN: false
   UPLOAD_BIN_DIR: true
   FIRMWARE_RELEASE: true
   FIRMWARE_TAG: ZN_M2-6.12-NOWIFI
@@ -64,7 +64,7 @@ jobs:
     - name: Combine Disks(合并磁盘)
       uses: easimon/maximize-build-space@master
       with:
-        swap-size-mb: 1024
+        swap-size-mb: 4096
         temp-reserve-mb: 100
         root-reserve-mb: 1024
 
