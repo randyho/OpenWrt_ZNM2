@@ -121,7 +121,7 @@ jobs:
       run: |
         cd $OPENWRT_PATH
         make defconfig
-        make download -j4
+        make download -j2
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
@@ -130,7 +130,7 @@ jobs:
       run: |
         cd $OPENWRT_PATH
         echo "CPU cores: $(nproc)"
-        make -j4 V=s
+        make -j2 V=s
         echo "status=success" >> $GITHUB_OUTPUT
         echo "DATE=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
