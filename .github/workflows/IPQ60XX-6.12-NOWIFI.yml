@@ -11,11 +11,7 @@ on:
         description: "SSH connection to Actions"
         required: false
         default: "false"
-# Uncomment the following to run regularly. Note that the cron expression here does not contain seconds.
-#  schedule:
-#    - cron: 0 12 * * *
-  watch:
-    types: started
+
 permissions:
   contents: write
   
@@ -188,3 +184,20 @@ jobs:
           - 固件内核版本：${{ env.VERSION_KERNEL }}
           - 固件编译前最后一次➦[主源码](${{ env.REPO_URL }})更新记录
           - ${{ env.VERSION_INFO }}
+
+
+    - name: Update Release Published Date(更新发布时间)
+      if: steps.compile.outputs.status == 'success' && env.FIRMWARE_RELEASE == 'true'
+      env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ env.FIRMWARE_TAG }}
+        run: |
+          RELEASE_ID=$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${RELEASE_TAG}" --jq '.id')
+          PUBLISHED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          gh api --method PATCH \
+            "repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}" \
+            -f "published_at=${PUBLISHED_AT}"
+
+          echo "Release 发布时间已更新为：${PUBLISHED_AT}"
+
