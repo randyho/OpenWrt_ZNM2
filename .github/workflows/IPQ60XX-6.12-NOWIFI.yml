@@ -185,7 +185,6 @@ jobs:
           - 固件编译前最后一次➦[主源码](${{ env.REPO_URL }})更新记录
           - ${{ env.VERSION_INFO }}
 
-
     - name: Update Release Published Date(更新发布时间)
       if: steps.compile.outputs.status == 'success' && env.FIRMWARE_RELEASE == 'true'
       env:
